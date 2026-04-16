@@ -1,0 +1,22 @@
+{
+  "name": "Tokyo Nature Spots",
+  "short_name": "NatureTokyo",
+  "description": "Прекрасные природные места недалеко от Токио / Beautiful nature spots near Tokyo",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#1e1e2f",
+  "background_color": "#121212",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "icons/icon-192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "icons/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
