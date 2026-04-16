@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nature Spots near Tokyo</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e1e2f">
+  <meta name="description" content="Прекрасные природные места недалеко от Токио">
+  <link rel="apple-touch-icon" href="icons/icon-192.jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    :root {
+      --bg: #121212;
+      --surface: #1e1e2e;
+      --card: #2a2a3a;
+      --text: #f0f0f0;
+      --text-secondary: #b0b0c0;
+      --border: #3a3a4a;
+      --accent: #6c5ce7;
+      --accent-hover: #5a4ad7;
+      --button-bg: #2d2d3d;
+      --shadow: rgba(0,0,0,0.3);
+    }
+    body.light {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #4a4a5a;
+      --border: #dddde3;
+      --accent: #5a4ad7;
+      --accent-hover: #4a3bc7;
+      --button-bg: #e9e9ef;
+      --shadow: rgba(0,0,0,0.05);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.5;
+      padding: 0;
+      margin: 0;
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), #a29bfe);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    button {
+      background-color: var(--button-bg);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text);
+      border: 1px solid var(--border);
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .lang-active {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .spots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background-color: var(--card);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 8px 20px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #555;
+    }
+    .card-content {
+      padding: 1.2rem;
+    }
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .detail-link {
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .detail-container {
+      background-color: var(--surface);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      margin: 1rem 0 2rem;
+      border: 1px solid var(--border);
+    }
+    .detail-img {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .detail-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .detail-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+    .access-info {
+      background: var(--button-bg);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+      border-left: 4px solid var(--accent);
+    }
+    .official-btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    .back-btn {
+      background: var(--button-bg);
+      margin-top: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 640px) {
+      .app { padding: 0.8rem; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1 data-i18n="title">🌿 Природа рядом с Токио</h1>
+    <div class="controls">
+      <button id="langRu" class="lang-active">🇷🇺 Русский</button>
+      <button id="langEn">🇬🇧 English</button>
+      <button id="langJa">🇯🇵 日本語</button>
+      <button id="themeToggle" aria-label="Переключить тему">🌓 Dark/Light</button>
+    </div>
+  </header>
+
+  <main id="mainPage">
+    <div class="spots-grid" id="spotsGrid"></div>
+  </main>
+
+  <div id="detailPage" class="hidden">
+    <div class="detail-container" id="detailContainer"></div>
+    <button class="back-btn" id="backButton">← <span data-i18n="back">Назад к списку</span></button>
+  </div>
+
+  <footer>
+    <p><span data-i18n="contact">Contact us</span><br>
+    <a href="mailto:mementomorikatsu@gmail.com">mementomorikatsu@gmail.com</a></p>
+  </footer>
+</div>
+
+<script>
+  const translations = {
+    ru: {
+      title: "🌿 Природа рядом с Токио",
+      contact: "Связаться с нами",
+      back: "Назад к списку",
+      viewDetail: "Подробнее →",
+      officialSite: "Перейти на официальный сайт",
+      accessTitle: "🚗 Как добраться:"
+    },
+    en: {
+      title: "🌿 Nature near Tokyo",
+      contact: "Contact us",
+      back: "Back to list",
+      viewDetail: "More →",
+      officialSite: "Official website",
+      accessTitle: "🚗 Access:"
+    },
+    ja: {
+      title: "🌿 東京近郊の自然スポット",
+      contact: "お問い合わせ",
+      back: "一覧に戻る",
+      viewDetail: "詳細を見る →",
+      officialSite: "公式サイトへ",
+      accessTitle: "🚗 アクセス方法:"
+    }
+  };
+
+  // スポットデータ (画像IDは適宜変更可能、公式URLは実際の観光サイト)
+  const spotsData = [
+    { id: 0, imageId: 104, officialUrl: "https://www.gotokyo.org/cn/spot/116/index.html",
+      name: { ru: "Окутама", en: "Okutama", ja: "奥多摩" },
+      shortDesc: { ru: "Горные пейзажи, озеро и живописные мосты", en: "Mountains, lake & scenic bridges", ja: "山、湖、風光明媚な浮橋" },
+      fullDesc: { ru: "Окутама — это рай для любителей природы всего в 2 часах от Токио. Главные жемчужины: озеро Окутама (искусственное озеро с изумрудной водой) и уникальный плавучий мост «Майяма», который меняет форму в зависимости от уровня воды. Летом здесь прохладно, осенью — потрясающие кленовые леса. Можно арендовать лодку или просто гулять по набережной.", 
+                 en: "Okutama is a nature lover's paradise just 2 hours from Tokyo. Main highlights: Lake Okutama (emerald green artificial lake) and the unique 'Mayama Floating Bridge' that changes shape with the water level. Cool in summer, stunning maple forests in autumn. You can rent a boat or just stroll along the shore.",
+                 ja: "奥多摩は都心から約2時間の自然愛好家の楽園。主な見どころは、エメラルドグリーンの人造湖「奥多摩湖」と、水位で形を変えるユニークな「麦山の浮橋」。夏は涼しく、秋は見事な紅葉。ボートレンタルや湖畔散策が楽しめます。" },
+      access: { ru: "От станции Синдзюку: по линии JR Chuo до станции Омэ (около 1 часа), затем пересадка на поезд JR Itsukaichi до станции Окутама (ещё 30 минут). От станции 15 минут пешком до озера. Также ходят автобусы до моста Майяма.",
+                 en: "From Shinjuku Station: Take JR Chuo Line to Ome Station (about 1 hour), then transfer to JR Itsukaichi Line to Okutama Station (30 more min). 15 min walk to the lake. Buses to Mayama Bridge also available.",
+                 ja: "新宿駅から：JR中央線で青梅駅まで約1時間、JR五日市線に乗り換え奥多摩駅まで約30分。駅から湖までは徒歩15分。麦山の浮橋行きのバスもあります。" }
+    },
+    { id: 1, imageId: 15, officialUrl: "https://www.nikko-jp.org/",
+      name: { ru: "Никко", en: "Nikko", ja: "日光" },
+      shortDesc: { ru: "Озеро Тюдзэндзи и водопад Кэгон", en: "Lake Chuzenji & Kegon Falls", ja: "中禅寺湖と華厳の滝" },
+      fullDesc: { ru: "Никко — это природное и культурное сокровище Японии. Озеро Тюдзэндзи расположено на высоте 1269 м, а водопад Кэгон (97 м) входит в тройку самых красивых водопадов Японии. Особенно впечатляюще зимой, когда водопад частично замерзает. Рядом — горячие источники и живописные горные тропы.", 
+                 en: "Nikko is a natural and cultural treasure of Japan. Lake Chuzenji sits at 1269m altitude, and Kegon Falls (97m) is one of Japan's three most beautiful waterfalls. Especially impressive in winter when it partially freezes. Nearby hot springs and scenic mountain trails.",
+                 ja: "日光は日本の自然と文化の宝庫。中禅寺湖は標高1269mに位置し、華厳の滝（97m）は日本三名瀑の一つ。冬は一部が凍り付く姿も圧巻。周辺には温泉やハイキングコースが充実。" },
+      access: { ru: "От станции Тобу-Асакуса: поезд Tobu Limited Express до станции Тобу-Никко (около 2 часов). Затем автобус до озера Тюдзэндзи (50 минут, живописный серпантин).",
+                 en: "From Tobu-Asakusa Station: Tobu Limited Express to Tobu-Nikko Station (about 2 hours). Then bus to Lake Chuzenji (50 minutes, scenic winding road).",
+                 ja: "東武浅草駅から：東武特急で東武日光駅まで約2時間。その後バスで中禅寺湖まで約50分（絶景のワインディングロード）。" }
+    },
+    { id: 2, imageId: 20, officialUrl: "https://www.hakone.or.jp/",
+      name: { ru: "Хаконэ", en: "Hakone", ja: "箱根" },
+      shortDesc: { ru: "Вид на Фудзи, озеро Аси, долина Овакудани", en: "Mt.Fuji view, Lake Ashi, Owakudani Valley", ja: "富士山ビュー、芦ノ湖、大涌谷" },
+      fullDesc: { ru: "Хаконэ — классический курорт с видом на Фудзи. Озеро Аси славится своими видами на гору и красные тории. В Овакудани можно увидеть геотермальные источники и попробовать знаменитые чёрные яйца, сваренные в серных водах (говорят, они прибавляют 7 лет жизни!). Круиз на пиратском корабле по озеру — обязателен.", 
+                 en: "Hakone is a classic resort with Mt. Fuji views. Lake Ashi is famous for its views of the mountain and red torii gates. At Owakudani you can see geothermal vents and try famous black eggs boiled in sulfur waters (said to add 7 years to your life!). A pirate ship cruise on the lake is a must.",
+                 ja: "箱根は富士山の眺望で知られる古典的な温泉地。芦ノ湖は赤い鳥居と富士山の共演が絶景。大涌谷では地熱地帯を見学し、硫黄で茹でた黒たまご（寿命が7年伸びるといわれる）を味わえます。海賊船クルーズもおすすめ。" },
+      access: { ru: "От станции Синдзюку: поезд Odakyu Romancecar до станции Хаконэ-Юмото (около 90 минут). Затем использовать канатную дорогу, паром и автобусы Hakone Free Pass.",
+                 en: "From Shinjuku Station: Odakyu Romancecar to Hakone-Yumoto Station (about 90 min). Then use cable cars, ropeway, and sightseeing boats with Hakone Free Pass.",
+                 ja: "新宿駅から：小田急ロマンスカーで箱根湯本駅まで約90分。箱根フリーパスを使ってケーブルカー、ロープウェイ、観光船を乗り継ぎ。" }
+    },
+    { id: 3, imageId: 30, officialUrl: "https://www.takaotozan.co.jp/",
+      name: { ru: "Такао-сан", en: "Mount Takao", ja: "高尾山" },
+      shortDesc: { ru: "Лёгкий подъём, вид на Фудзи", en: "Easy climb, Mt.Fuji view", ja: "気軽な登山、富士山眺望" },
+      fullDesc: { ru: "Такао-сан — самая доступная гора Токио (высота 599 м). На вершину можно подняться на канатной дороге или кресельном подъёмнике. С обзорной площадки в ясный день видна Фудзи. Тропы ухоженные, есть храм Якуоин, сёгуны молились здесь о победе. Особенно красиво весной (сакура) и осенью (кленовые листья).", 
+                 en: "Mount Takao is Tokyo's most accessible mountain (599m). You can take a cable car or chairlift to the top. On clear days, Mt. Fuji is visible from the observation deck. Well-maintained trails, and the Yakuoin temple where shoguns prayed for victory. Particularly beautiful in spring (cherry blossoms) and autumn (maple leaves).",
+                 ja: "高尾山は標高599mの都内で最もアクセスしやすい山。ケーブルカーやリフトで手軽に登頂可能。晴れた日は展望台から富士山を望めます。整備されたハイキングコースや薬王院も魅力。春の桜、秋の紅葉が特に美しい。" },
+      access: { ru: "От станции Синдзюку: поезд Keio Line до станции Такаосангути (около 50 минут). От станции пешком до канатной дороги 5 минут.",
+                 en: "From Shinjuku Station: Keio Line to Takaosanguchi Station (about 50 min). 5 min walk to the cable car station.",
+                 ja: "新宿駅から：京王線で高尾山口駅まで約50分。駅からケーブルカー乗り場まで徒歩5分。" }
+    },
+    { id: 4, imageId: 42, officialUrl: "https://www.enoshima-jinja.or.jp/",
+      name: { ru: "Эносима", en: "Enoshima", ja: "江の島" },
+      shortDesc: { ru: "Остров, океан, вид на Фудзи", en: "Island, ocean, Fuji view", ja: "島、海、富士山ビュー" },
+      fullDesc: { ru: "Эносима — небольшой остров, соединённый с материком мостом. Здесь есть маяк, ботанический сад, синтоистские святилища и пещеры, вырытые приливом. Закаты над Фудзи с набережной острова просто волшебные. Попробуйте местные тако (осьминожьи крекеры) и сирасу (молодь сардины).", 
+                 en: "Enoshima is a small island connected to the mainland by a bridge. There is a lighthouse, botanical garden, Shinto shrines, and tidal caves. Sunsets over Mt. Fuji from the island's promenade are magical. Try local tako (octopus crackers) and shirasu (baby sardines).",
+                 ja: "江の島は橋で本土と結ばれた小さな島。灯台、植物園、神社、波食の洞窟があります。島の遊歩道から見る富士山の夕日は格別。地元のたこせんべいやしらす料理を試してみて。" },
+      access: { ru: "От станции Синдзюку: поезд Odakyu Line до станции Катасэ-Эносима (около 65 минут). Или JR Tokaido Line до станции Фудзисава, затем пересадка на Enoden до станции Эносима. От станции 10 минут пешком до острова.",
+                 en: "From Shinjuku Station: Odakyu Line to Katase-Enoshima Station (about 65 min). Or JR Tokaido Line to Fujisawa, then transfer to Enoden to Enoshima Station. 10 min walk to the island.",
+                 ja: "新宿駅から：小田急線で片瀬江ノ島駅まで約65分。またはJR東海道線で藤沢駅、江ノ電に乗り換え江ノ島駅。駅から島まで徒歩10分。" }
+    },
+    { id: 5, imageId: 60, officialUrl: "https://www.kamakura-burabura.com/",
+      name: { ru: "Камакура", en: "Kamakura", ja: "鎌倉" },
+      shortDesc: { ru: "Храмы, пляж, вид на Эносиму и Фудзи", en: "Temples, beach, Enoshima & Fuji view", ja: "寺院、ビーチ、江ノ島と富士山の眺望" },
+      fullDesc: { ru: "Камакура — древняя столица самураев с более чем 65 храмами и святилищами. Главные достопримечательности: Большой Будда (Котоку-ин), храм Хасэ-дэра с видом на океан и пляж Юигахама. Летом здесь купаются, а зимой можно увидеть Фудзи на закате. Очень спокойная, духовная атмосфера.", 
+                 en: "Kamakura — the ancient capital of the samurai with over 65 temples and shrines. Main attractions: Great Buddha (Kotoku-in), Hase-dera temple with ocean view, and Yuigahama beach. In summer you can swim, and in winter you can see Fuji at sunset. Very peaceful, spiritual atmosphere.",
+                 ja: "鎌倉は65以上の寺社がある古都。大仏（高徳院）、由比ヶ浜海岸、海を望む長谷寺が代表的。夏は海水浴、冬は夕日に映える富士山を望めます。とても静かで精神的な雰囲気。" },
+      access: { ru: "От станции Токио: поезд JR Yokosuka Line до станции Камакура (около 1 часа). Или от Синдзюку: поезд Shonan-Shinjuku Line до станции Камакура (также 1 час).",
+                 en: "From Tokyo Station: JR Yokosuka Line to Kamakura Station (about 1 hour). Or from Shinjuku: Shonan-Shinjuku Line to Kamakura Station (also 1 hour).",
+                 ja: "東京駅から：JR横須賀線で鎌倉駅まで約1時間。新宿駅からも湘南新宿ラインで同程度。" }
+    },
+    { id: 6, imageId: 14, officialUrl: "https://hitachikaihin.jp/",
+      name: { ru: "Парк Хитачи", en: "Hitachi Seaside Park", ja: "国営ひたち海浜公園" },
+      shortDesc: { ru: "Цветущие холмы, невероятные пейзажи", en: "Flowering hills, incredible landscapes", ja: "花の丘、圧倒的な景観" },
+      fullDesc: { ru: "Парк Хитачи — 350 гектаров цветущих холмов. Самые известные цветы: немофила (голубые ковры в апреле-мае) и космея (розово-белые поля осенью). Есть огромное колесо обозрения, велосипедные дорожки и детские площадки. Это место меняет представление о Японии как о «только бетонных джунглях».", 
+                 en: "Hitachi Seaside Park — 350 hectares of flowering hills. Most famous flowers: nemophila (blue carpets in April-May) and cosmos (pink-white fields in autumn). There is a huge Ferris wheel, cycling paths, and playgrounds. This place changes the perception of Japan as 'only concrete jungle'.",
+                 ja: "国営ひたち海浜公園は350ヘクタールの花の丘。最も有名な花は、4-5月のネモフィラ（青いじゅうたん）と秋のコスモス（ピンクと白の野原）。大観覧車、サイクリングコース、遊具広場も。日本のイメージを変える場所です。" },
+      access: { ru: "От станции Токио: поезд JR Joban Line до станции Кацута (около 1,5 часов). Затем автобус до парка (20 минут).",
+                 en: "From Tokyo Station: JR Joban Line to Katsuta Station (about 1.5 hours). Then bus to the park (20 min).",
+                 ja: "東京駅から：JR常磐線で勝田駅まで約1.5時間。そこからバスで公園まで20分。" }
+    },
+    { id: 7, imageId: 88, officialUrl: "https://www.umihotaru.com/",
+      name: { ru: "Умихотару", en: "Umihotaru", ja: "海ほたる" },
+      shortDesc: { ru: "Парящая парковка над заливом, панорама Токийского залива", en: "Floating parking lot over the bay, panoramic Tokyo Bay", ja: "東京湾に浮かぶパーキングエリア、絶景パノラマ" },
+      fullDesc: { ru: "«Умихотару» (Морской светлячок) — это уникальная искусственная платформа-паркинг на середине Токийского залива, соединяющая Кавасаки и Кисарадзу через Аква-лайн. Отсюда открывается 360-градусный панорамный вид на залив, иногда до самого Токио. Особенно впечатляет ночью, когда городские огни отражаются в воде. Внутри есть рестораны, сувенирные магазины и смотровая площадка. Место, где чувствуешь себя на краю цивилизации среди воды и неба.", 
+                 en: "Umihotaru (Sea Firefly) is a unique artificial parking platform in the middle of Tokyo Bay, connecting Kawasaki and Kisarazu via the Aqua-Line. It offers 360-degree panoramic views of the bay, sometimes all the way to Tokyo. Especially impressive at night when city lights reflect on the water. Inside, there are restaurants, souvenir shops, and an observation deck. A place where you feel at the edge of civilization, surrounded by water and sky.",
+                 ja: "「海ほたる」は東京湾の真ん中に浮かぶ人工駐車場プラットフォームで、アクアラインを通じて川崎と木更津を結びます。360度のパノラマビューが楽しめ、時には東京までも望めます。特に夜景が素晴らしく、街の灯りが水面に映えます。レストラン、売店、展望デッキ完備。水と空に囲まれ、文明の果てにいるような感覚を味わえます。" },
+      access: { ru: "Только на машине (или на автобусе). Из Токио: по скоростной дороге Shuto Expressway до платного Aqua-Line. Умихотару находится прямо на середине тоннеля/моста. Из центра Токио около 40-50 минут при отсутствии пробок. Также есть прямые автобусы от станции Кавасаки или Кисарадзу (но лучше арендовать машину).",
+                 en: "By car only (or highway bus). From Tokyo: Shuto Expressway to the toll Aqua-Line. Umihotaru is right in the middle of the tunnel/bridge. About 40-50 min from central Tokyo without traffic. Direct buses from Kawasaki or Kisarazu stations also exist (but renting a car is recommended).",
+                 ja: "車のみ（または高速バス）。東京から：首都高速道路から有料のアクアラインへ。海ほたるはトンネル/橋の真ん中にあります。都心から渋滞なしで約40-50分。川崎駅や木更津駅からの直行バスもありますが、レンタカーがおすすめ。" }
+    },
+    { id: 8, imageId: 92, officialUrl: "https://www.mboso-etoko.jp/",
+      name: { ru: "Полуостров Босо", en: "Boso Peninsula", ja: "房総半島" },
+      shortDesc: { ru: "Дикие пляжи, скалы, цветочные поля и маяки", en: "Wild beaches, cliffs, flower fields and lighthouses", ja: "荒々しい海岸、崖、花畑、灯台" },
+      fullDesc: { ru: "Южная часть полуострова Босо (префектура Тиба) — одно из самых недооценённых мест вблизи Токио. Здесь находятся скалы Дзигакудани («Адская долина») с причудливыми эрозионными образованиями, маяк Суномата с видом на Тихий океан, а также поля цветов (нарциссы, рапс, космея) в зависимости от сезона. Пляжи почти пустынные даже летом. Это идеальное место для тех, кто хочет убежать от толп и почувствовать дикую природу.", 
+                 en: "The southern part of the Boso Peninsula (Chiba Prefecture) is one of the most underrated places near Tokyo. Here you'll find Jigakudani ('Hell Valley') rocks with bizarre erosion formations, Sunomata Lighthouse with Pacific Ocean views, and flower fields (daffodils, rapeseed, cosmos) depending on the season. Beaches are almost deserted even in summer. Perfect for those who want to escape crowds and feel wild nature.",
+                 ja: "房総半島南部（千葉県）は東京近郊で最も過小評価されている場所の一つ。地獄谷と呼ばれる奇妙な侵食岩、太平洋を見下ろす洲ノ埼灯台、季節ごとの花畑（水仙、菜の花、コスモス）があります。ビーチは夏でもほとんど人がいません。混雑を避けて野生の自然を感じたい人に最適です。" },
+      access: { ru: "На машине: от Токио по платному Aqua-Line до Кисарадзу, затем на юг по трассе 128 (около 1,5-2 часов). Также можно на поезде: JR Uchibo Line от Токио до станции Татеяма (около 2 часов), затем такси или автобус. Для свободы передвижения лучше арендовать автомобиль.",
+                 en: "By car: from Tokyo via toll Aqua-Line to Kisarazu, then south on Route 128 (about 1.5-2 hours). By train: JR Uchibo Line from Tokyo to Tateyama Station (about 2 hours), then taxi or bus. Renting a car is recommended for flexibility.",
+                 ja: "車の場合：東京からアクアライン経由で木更津へ、その後国道128号線を南下（約1.5〜2時間）。電車の場合：JR内房線で東京から館山駅まで約2時間、そこからタクシーまたはバス。移動の自由を考えるとレンタカーがおすすめ。" }
+    },
+    // ★ 新規追加: 伊豆下田 (Izu Shimoda) ★
+    { id: 9, imageId: 45, officialUrl: "https://www.izushimoda.jp/",
+      name: { ru: "Идзу Симода", en: "Izu Shimoda", ja: "伊豆下田" },
+      shortDesc: { ru: "Исторический порт, белые пляжи, скалы и цветы", en: "Historic port, white beaches, cliffs & flowers", ja: "歴史ある港町、白い砂浜、崖、花" },
+      fullDesc: { ru: "Симода — очаровательный город на южной оконечности полуострова Идзу. Здесь находится пляж Сирахама с белым песком и бирюзовой водой (один из самых красивых в Японии). Мыс Ирита, набережная Перри (место высадки коммодора Перри в 1854 году), храм Рёсэндзи с садом и статуями. Также знаменитые «Цветы ама» (ныряльщицы за жемчугом). Зимой — поля нарциссов на мысе Цурусаки, а летом — отличный дайвинг и морские прогулки. В городе много традиционных гостиниц (рёкан) с горячими источниками. Это идеальное место, чтобы забыть о городском стрессе и насладиться океаном и историей.", 
+                 en: "Shimoda is a charming town at the southern tip of the Izu Peninsula. It features Shirahama Beach with white sand and turquoise water (one of Japan's most beautiful). Cape Irita, Perry's Promenade (where Commodore Perry landed in 1854), and Ryosenji Temple with its garden and statues. Famous 'Ama' pearl divers can also be seen. In winter, daffodil fields at Cape Tsurusaki; in summer, great diving and boat tours. The town has many traditional ryokan with hot springs. An ideal place to forget urban stress and enjoy the ocean and history.",
+                 ja: "下田は伊豆半島南部の魅力的な港町。白砂とターコイズブルーの海が美しい白浜海岸（日本有数の美しさ）。ペリーロード（1854年にペリー提督が上陸した場所）、了仙寺の庭園と像、そして「海女」の真珠漁も有名。冬は爪木崎の水仙畑、夏はダイビングやクルージング。伝統的な温泉旅館も多く、都会のストレスを忘れて海と歴史を満喫するのに最適な場所です。" },
+      access: { ru: "На поезде: от станции Токио до станции Идзу-Симода поездом Odoriko (Limited Express) — около 2 часов 40 минут (прямой поезд). На машине: по скоростной дороге Tomei или Shin-Tomei до Atoi, затем по маршруту 135 на юг (около 3 часов). Внутри города удобно передвигаться на автобусах или такси.",
+                 en: "By train: From Tokyo Station to Izu-Shimoda Station on the Odoriko Limited Express — about 2 hours 40 minutes (direct). By car: Tomei or Shin-Tomei Expressway to Atoi, then south on Route 135 (about 3 hours). Buses and taxis are convenient within the town.",
+                 ja: "電車の場合：東京駅から特急「踊り子」で伊豆下田駅まで約2時間40分（直通）。車の場合：東名・新東名高速道路で厚木まで、その後国道135号線を南下（約3時間）。市内はバスやタクシーが便利です。" }
+    }
+  ];
+
+  let currentLang = 'ru';
+  let currentTheme = 'dark';
+  let showingDetail = false;
+  let currentSpotId = null;
+
+  const mainPage = document.getElementById('mainPage');
+  const detailPage = document.getElementById('detailPage');
+  const spotsGrid = document.getElementById('spotsGrid');
+  const detailContainer = document.getElementById('detailContainer');
+  const backBtn = document.getElementById('backButton');
+  const langRuBtn = document.getElementById('langRu');
+  const langEnBtn = document.getElementById('langEn');
+  const langJaBtn = document.getElementById('langJa');
+  const themeToggle = document.getElementById('themeToggle');
+
+  function setTheme(theme) {
+    if (theme === 'light') document.body.classList.add('light');
+    else document.body.classList.remove('light');
+    localStorage.setItem('theme', theme);
+    currentTheme = theme;
+  }
+  function toggleTheme() { setTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+
+  function updateUITexts() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[currentLang][key]) {
+        if (el.tagName === 'H1') el.textContent = translations[currentLang][key];
+        else if (el.tagName === 'SPAN') el.textContent = translations[currentLang][key];
+        else el.textContent = translations[currentLang][key];
+      }
+    });
+    langRuBtn.classList.toggle('lang-active', currentLang === 'ru');
+    langEnBtn.classList.toggle('lang-active', currentLang === 'en');
+    langJaBtn.classList.toggle('lang-active', currentLang === 'ja');
+    if (!showingDetail) renderMainList();
+    else renderDetailView(currentSpotId);
+  }
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('language', lang);
+    updateUITexts();
+  }
+
+  function renderMainList() {
+    spotsGrid.innerHTML = '';
+    spotsData.forEach(spot => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const imgUrl = `https://picsum.photos/id/${spot.imageId}/400/280`;
+      card.innerHTML = `
+        <img class="card-img" src="${imgUrl}" alt="${spot.name[currentLang]}" loading="lazy">
+        <div class="card-content">
+          <div class="card-title">${spot.name[currentLang]}</div>
+          <div class="card-desc">${spot.shortDesc[currentLang]}</div>
+          <a href="#" class="detail-link" data-id="${spot.id}">${translations[currentLang].viewDetail}</a>
+        </div>
+      `;
+      card.querySelector('.detail-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        showDetail(spot.id);
+      });
+      spotsGrid.appendChild(card);
+    });
+  }
+
+  function showDetail(spotId) {
+    currentSpotId = spotId;
+    showingDetail = true;
+    mainPage.classList.add('hidden');
+    detailPage.classList.remove('hidden');
+    renderDetailView(spotId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderDetailView(spotId) {
+    const spot = spotsData.find(s => s.id === spotId);
+    if (!spot) return;
+    const imgUrl = `https://picsum.photos/id/${spot.imageId}/800/500`;
+    detailContainer.innerHTML = `
+      <img class="detail-img" src="${imgUrl}" alt="${spot.name[currentLang]}">
+      <h2 class="detail-title">${spot.name[currentLang]}</h2>
+      <p class="detail-desc">${spot.fullDesc[currentLang]}</p>
+      <div class="access-info">
+        <strong>${translations[currentLang].accessTitle}</strong><br>
+        ${spot.access[currentLang]}
+      </div>
+      <a href="${spot.officialUrl}" target="_blank" rel="noopener noreferrer" class="official-btn">${translations[currentLang].officialSite} ↗</a>
+    `;
+    const backSpan = document.querySelector('#backButton span');
+    if (backSpan) backSpan.textContent = translations[currentLang].back;
+  }
+
+  function backToList() {
+    showingDetail = false;
+    detailPage.classList.add('hidden');
+    mainPage.classList.remove('hidden');
+    renderMainList();
+  }
+
+  function initThemeAndLang() {
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'light' ? 'light' : 'dark');
+    const savedLang = localStorage.getItem('language');
+    if (savedLang === 'en') setLanguage('en');
+    else if (savedLang === 'ja') setLanguage('ja');
+    else setLanguage('ru');
+  }
+
+  backBtn.addEventListener('click', backToList);
+  langRuBtn.addEventListener('click', () => setLanguage('ru'));
+  langEnBtn.addEventListener('click', () => setLanguage('en'));
+  langJaBtn.addEventListener('click', () => setLanguage('ja'));
+  themeToggle.addEventListener('click', toggleTheme);
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+    });
+  }
+
+  initThemeAndLang();
+  renderMainList();
+</script>
+</body>
+</html>
