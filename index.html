@@ -248,6 +248,9 @@
 </div>
 
 <script>
+  // ============================================================
+  // 多言語テキスト (ロシア語メイン、英語、日本語)
+  // ============================================================
   const translations = {
     ru: {
       title: "🌿 Природа рядом с Токио",
@@ -275,9 +278,18 @@
     }
   };
 
-  // スポットデータ (画像IDは適宜変更可能、公式URLは実際の観光サイト)
+  // ============================================================
+  // ★ スポットデータ (画像URLはご自身のものに差し替えてください)
+  // ============================================================
+  // 各スポットに imageUrl フィールドを追加しました。
+  // 例: "imageUrl": "images/okutama.jpg" または "https://example.com/photo.jpg"
+  // 現在はサンプルとして Picsum の画像を使用していますが、
+  // 実際の写真に変更する場合は、以下の URL を書き換えてください。
+  // ============================================================
   const spotsData = [
-    { id: 0, imageId: 104, officialUrl: "https://www.gotokyo.org/cn/spot/116/index.html",
+    { id: 0,
+      imageUrl: "https://picsum.photos/id/104/800/600",   // ← ここに奥多摩の画像URL
+      officialUrl: "https://www.gotokyo.org/cn/spot/116/index.html",
       name: { ru: "Окутама", en: "Okutama", ja: "奥多摩" },
       shortDesc: { ru: "Горные пейзажи, озеро и живописные мосты", en: "Mountains, lake & scenic bridges", ja: "山、湖、風光明媚な浮橋" },
       fullDesc: { ru: "Окутама — это рай для любителей природы всего в 2 часах от Токио. Главные жемчужины: озеро Окутама (искусственное озеро с изумрудной водой) и уникальный плавучий мост «Майяма», который меняет форму в зависимости от уровня воды. Летом здесь прохладно, осенью — потрясающие кленовые леса. Можно арендовать лодку или просто гулять по набережной.", 
@@ -287,7 +299,9 @@
                  en: "From Shinjuku Station: Take JR Chuo Line to Ome Station (about 1 hour), then transfer to JR Itsukaichi Line to Okutama Station (30 more min). 15 min walk to the lake. Buses to Mayama Bridge also available.",
                  ja: "新宿駅から：JR中央線で青梅駅まで約1時間、JR五日市線に乗り換え奥多摩駅まで約30分。駅から湖までは徒歩15分。麦山の浮橋行きのバスもあります。" }
     },
-    { id: 1, imageId: 15, officialUrl: "https://www.nikko-jp.org/",
+    { id: 1,
+      imageUrl: "https://picsum.photos/id/15/800/600",
+      officialUrl: "https://www.nikko-jp.org/",
       name: { ru: "Никко", en: "Nikko", ja: "日光" },
       shortDesc: { ru: "Озеро Тюдзэндзи и водопад Кэгон", en: "Lake Chuzenji & Kegon Falls", ja: "中禅寺湖と華厳の滝" },
       fullDesc: { ru: "Никко — это природное и культурное сокровище Японии. Озеро Тюдзэндзи расположено на высоте 1269 м, а водопад Кэгон (97 м) входит в тройку самых красивых водопадов Японии. Особенно впечатляюще зимой, когда водопад частично замерзает. Рядом — горячие источники и живописные горные тропы.", 
@@ -297,7 +311,9 @@
                  en: "From Tobu-Asakusa Station: Tobu Limited Express to Tobu-Nikko Station (about 2 hours). Then bus to Lake Chuzenji (50 minutes, scenic winding road).",
                  ja: "東武浅草駅から：東武特急で東武日光駅まで約2時間。その後バスで中禅寺湖まで約50分（絶景のワインディングロード）。" }
     },
-    { id: 2, imageId: 20, officialUrl: "https://www.hakone.or.jp/",
+    { id: 2,
+      imageUrl: "https://picsum.photos/id/20/800/600",
+      officialUrl: "https://www.hakone.or.jp/",
       name: { ru: "Хаконэ", en: "Hakone", ja: "箱根" },
       shortDesc: { ru: "Вид на Фудзи, озеро Аси, долина Овакудани", en: "Mt.Fuji view, Lake Ashi, Owakudani Valley", ja: "富士山ビュー、芦ノ湖、大涌谷" },
       fullDesc: { ru: "Хаконэ — классический курорт с видом на Фудзи. Озеро Аси славится своими видами на гору и красные тории. В Овакудани можно увидеть геотермальные источники и попробовать знаменитые чёрные яйца, сваренные в серных водах (говорят, они прибавляют 7 лет жизни!). Круиз на пиратском корабле по озеру — обязателен.", 
@@ -307,7 +323,9 @@
                  en: "From Shinjuku Station: Odakyu Romancecar to Hakone-Yumoto Station (about 90 min). Then use cable cars, ropeway, and sightseeing boats with Hakone Free Pass.",
                  ja: "新宿駅から：小田急ロマンスカーで箱根湯本駅まで約90分。箱根フリーパスを使ってケーブルカー、ロープウェイ、観光船を乗り継ぎ。" }
     },
-    { id: 3, imageId: 30, officialUrl: "https://www.takaotozan.co.jp/",
+    { id: 3,
+      imageUrl: "https://picsum.photos/id/30/800/600",
+      officialUrl: "https://www.takaotozan.co.jp/",
       name: { ru: "Такао-сан", en: "Mount Takao", ja: "高尾山" },
       shortDesc: { ru: "Лёгкий подъём, вид на Фудзи", en: "Easy climb, Mt.Fuji view", ja: "気軽な登山、富士山眺望" },
       fullDesc: { ru: "Такао-сан — самая доступная гора Токио (высота 599 м). На вершину можно подняться на канатной дороге или кресельном подъёмнике. С обзорной площадки в ясный день видна Фудзи. Тропы ухоженные, есть храм Якуоин, сёгуны молились здесь о победе. Особенно красиво весной (сакура) и осенью (кленовые листья).", 
@@ -317,7 +335,9 @@
                  en: "From Shinjuku Station: Keio Line to Takaosanguchi Station (about 50 min). 5 min walk to the cable car station.",
                  ja: "新宿駅から：京王線で高尾山口駅まで約50分。駅からケーブルカー乗り場まで徒歩5分。" }
     },
-    { id: 4, imageId: 42, officialUrl: "https://www.enoshima-jinja.or.jp/",
+    { id: 4,
+      imageUrl: "https://picsum.photos/id/42/800/600",
+      officialUrl: "https://www.enoshima-jinja.or.jp/",
       name: { ru: "Эносима", en: "Enoshima", ja: "江の島" },
       shortDesc: { ru: "Остров, океан, вид на Фудзи", en: "Island, ocean, Fuji view", ja: "島、海、富士山ビュー" },
       fullDesc: { ru: "Эносима — небольшой остров, соединённый с материком мостом. Здесь есть маяк, ботанический сад, синтоистские святилища и пещеры, вырытые приливом. Закаты над Фудзи с набережной острова просто волшебные. Попробуйте местные тако (осьминожьи крекеры) и сирасу (молодь сардины).", 
@@ -327,7 +347,9 @@
                  en: "From Shinjuku Station: Odakyu Line to Katase-Enoshima Station (about 65 min). Or JR Tokaido Line to Fujisawa, then transfer to Enoden to Enoshima Station. 10 min walk to the island.",
                  ja: "新宿駅から：小田急線で片瀬江ノ島駅まで約65分。またはJR東海道線で藤沢駅、江ノ電に乗り換え江ノ島駅。駅から島まで徒歩10分。" }
     },
-    { id: 5, imageId: 60, officialUrl: "https://www.kamakura-burabura.com/",
+    { id: 5,
+      imageUrl: "https://picsum.photos/id/60/800/600",
+      officialUrl: "https://www.kamakura-burabura.com/",
       name: { ru: "Камакура", en: "Kamakura", ja: "鎌倉" },
       shortDesc: { ru: "Храмы, пляж, вид на Эносиму и Фудзи", en: "Temples, beach, Enoshima & Fuji view", ja: "寺院、ビーチ、江ノ島と富士山の眺望" },
       fullDesc: { ru: "Камакура — древняя столица самураев с более чем 65 храмами и святилищами. Главные достопримечательности: Большой Будда (Котоку-ин), храм Хасэ-дэра с видом на океан и пляж Юигахама. Летом здесь купаются, а зимой можно увидеть Фудзи на закате. Очень спокойная, духовная атмосфера.", 
@@ -337,7 +359,9 @@
                  en: "From Tokyo Station: JR Yokosuka Line to Kamakura Station (about 1 hour). Or from Shinjuku: Shonan-Shinjuku Line to Kamakura Station (also 1 hour).",
                  ja: "東京駅から：JR横須賀線で鎌倉駅まで約1時間。新宿駅からも湘南新宿ラインで同程度。" }
     },
-    { id: 6, imageId: 14, officialUrl: "https://hitachikaihin.jp/",
+    { id: 6,
+      imageUrl: "https://picsum.photos/id/14/800/600",
+      officialUrl: "https://hitachikaihin.jp/",
       name: { ru: "Парк Хитачи", en: "Hitachi Seaside Park", ja: "国営ひたち海浜公園" },
       shortDesc: { ru: "Цветущие холмы, невероятные пейзажи", en: "Flowering hills, incredible landscapes", ja: "花の丘、圧倒的な景観" },
       fullDesc: { ru: "Парк Хитачи — 350 гектаров цветущих холмов. Самые известные цветы: немофила (голубые ковры в апреле-мае) и космея (розово-белые поля осенью). Есть огромное колесо обозрения, велосипедные дорожки и детские площадки. Это место меняет представление о Японии как о «только бетонных джунглях».", 
@@ -347,7 +371,9 @@
                  en: "From Tokyo Station: JR Joban Line to Katsuta Station (about 1.5 hours). Then bus to the park (20 min).",
                  ja: "東京駅から：JR常磐線で勝田駅まで約1.5時間。そこからバスで公園まで20分。" }
     },
-    { id: 7, imageId: 88, officialUrl: "https://www.umihotaru.com/",
+    { id: 7,
+      imageUrl: "https://picsum.photos/id/88/800/600",
+      officialUrl: "https://www.umihotaru.com/",
       name: { ru: "Умихотару", en: "Umihotaru", ja: "海ほたる" },
       shortDesc: { ru: "Парящая парковка над заливом, панорама Токийского залива", en: "Floating parking lot over the bay, panoramic Tokyo Bay", ja: "東京湾に浮かぶパーキングエリア、絶景パノラマ" },
       fullDesc: { ru: "«Умихотару» (Морской светлячок) — это уникальная искусственная платформа-паркинг на середине Токийского залива, соединяющая Кавасаки и Кисарадзу через Аква-лайн. Отсюда открывается 360-градусный панорамный вид на залив, иногда до самого Токио. Особенно впечатляет ночью, когда городские огни отражаются в воде. Внутри есть рестораны, сувенирные магазины и смотровая площадка. Место, где чувствуешь себя на краю цивилизации среди воды и неба.", 
@@ -357,7 +383,9 @@
                  en: "By car only (or highway bus). From Tokyo: Shuto Expressway to the toll Aqua-Line. Umihotaru is right in the middle of the tunnel/bridge. About 40-50 min from central Tokyo without traffic. Direct buses from Kawasaki or Kisarazu stations also exist (but renting a car is recommended).",
                  ja: "車のみ（または高速バス）。東京から：首都高速道路から有料のアクアラインへ。海ほたるはトンネル/橋の真ん中にあります。都心から渋滞なしで約40-50分。川崎駅や木更津駅からの直行バスもありますが、レンタカーがおすすめ。" }
     },
-    { id: 8, imageId: 92, officialUrl: "https://www.mboso-etoko.jp/",
+    { id: 8,
+      imageUrl: "https://picsum.photos/id/92/800/600",
+      officialUrl: "https://www.mboso-etoko.jp/",
       name: { ru: "Полуостров Босо", en: "Boso Peninsula", ja: "房総半島" },
       shortDesc: { ru: "Дикие пляжи, скалы, цветочные поля и маяки", en: "Wild beaches, cliffs, flower fields and lighthouses", ja: "荒々しい海岸、崖、花畑、灯台" },
       fullDesc: { ru: "Южная часть полуострова Босо (префектура Тиба) — одно из самых недооценённых мест вблизи Токио. Здесь находятся скалы Дзигакудани («Адская долина») с причудливыми эрозионными образованиями, маяк Суномата с видом на Тихий океан, а также поля цветов (нарциссы, рапс, космея) в зависимости от сезона. Пляжи почти пустынные даже летом. Это идеальное место для тех, кто хочет убежать от толп и почувствовать дикую природу.", 
@@ -367,8 +395,9 @@
                  en: "By car: from Tokyo via toll Aqua-Line to Kisarazu, then south on Route 128 (about 1.5-2 hours). By train: JR Uchibo Line from Tokyo to Tateyama Station (about 2 hours), then taxi or bus. Renting a car is recommended for flexibility.",
                  ja: "車の場合：東京からアクアライン経由で木更津へ、その後国道128号線を南下（約1.5〜2時間）。電車の場合：JR内房線で東京から館山駅まで約2時間、そこからタクシーまたはバス。移動の自由を考えるとレンタカーがおすすめ。" }
     },
-    // ★ 新規追加: 伊豆下田 (Izu Shimoda) ★
-    { id: 9, imageId: 45, officialUrl: "https://www.izushimoda.jp/",
+    { id: 9,
+      imageUrl: "https://picsum.photos/id/45/800/600",
+      officialUrl: "https://www.izushimoda.jp/",
       name: { ru: "Идзу Симода", en: "Izu Shimoda", ja: "伊豆下田" },
       shortDesc: { ru: "Исторический порт, белые пляжи, скалы и цветы", en: "Historic port, white beaches, cliffs & flowers", ja: "歴史ある港町、白い砂浜、崖、花" },
       fullDesc: { ru: "Симода — очаровательный город на южной оконечности полуострова Идзу. Здесь находится пляж Сирахама с белым песком и бирюзовой водой (один из самых красивых в Японии). Мыс Ирита, набережная Перри (место высадки коммодора Перри в 1854 году), храм Рёсэндзи с садом и статуями. Также знаменитые «Цветы ама» (ныряльщицы за жемчугом). Зимой — поля нарциссов на мысе Цурусаки, а летом — отличный дайвинг и морские прогулки. В городе много традиционных гостиниц (рёкан) с горячими источниками. Это идеальное место, чтобы забыть о городском стрессе и насладиться океаном и историей.", 
@@ -380,6 +409,9 @@
     }
   ];
 
+  // ============================================================
+  // 以降はアプリケーションロジック (変更不要)
+  // ============================================================
   let currentLang = 'ru';
   let currentTheme = 'dark';
   let showingDetail = false;
@@ -430,7 +462,8 @@
     spotsData.forEach(spot => {
       const card = document.createElement('div');
       card.className = 'card';
-      const imgUrl = `https://picsum.photos/id/${spot.imageId}/400/280`;
+      // imageUrl を直接使用
+      const imgUrl = spot.imageUrl;
       card.innerHTML = `
         <img class="card-img" src="${imgUrl}" alt="${spot.name[currentLang]}" loading="lazy">
         <div class="card-content">
@@ -459,7 +492,7 @@
   function renderDetailView(spotId) {
     const spot = spotsData.find(s => s.id === spotId);
     if (!spot) return;
-    const imgUrl = `https://picsum.photos/id/${spot.imageId}/800/500`;
+    const imgUrl = spot.imageUrl;
     detailContainer.innerHTML = `
       <img class="detail-img" src="${imgUrl}" alt="${spot.name[currentLang]}">
       <h2 class="detail-title">${spot.name[currentLang]}</h2>
